@@ -1,0 +1,13 @@
+{
+    "": {
+        "apigateway": {
+            "path": "",
+            "method": {
+                "value": "",
+                "items": []
+            },
+            "queryString": "param=val1",
+            "body": {}
+        }
+    }
+}

@@ -1,0 +1,151 @@
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point and uses default values.
+# You can always add more config options for more control.
+# We've included some commented out config examples here.
+# Just uncomment any of them to get that config option.
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+# Happy Coding!
+service: users-api
+# # app and org for use with dashboard.serverless.com
+# app: my-first-app
+# org: mlbarnes04
+
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+# frameworkVersion: "=X.X.X"
+
+custom:
+  tableName: 'users-table'
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  stage: dev
+  region: us-east-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource:
+        - { "Fn::GetAtt": ["DDBTable", "Arn" ] }
+  environment:
+    USERS_TABLE: ${self:custom.tableName}
+
+plugins:
+  - serverless-express
+
+functions:
+  save:
+    handler: app.handler
+    events:
+      - http:
+          path: /save-user
+          method: post
+          cors: true
+  
+  playlistPost:
+    handler: app.handler
+    events:
+      - http:
+          path: /user/playlist
+          method: post
+          cors: true
+  
+  playlistGet:
+    handler: app.handler
+    events:
+      - http:
+          path: /user/playlist
+          method: get
+          cors: true
+          
+resources:
+  Resources:
+    DDBTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: Id
+            AttributeType: S
+            
+          - AttributeName: Name
+            AttributeType: S
+            
+          - AttributeName: Email
+            AttributeType: S
+            
+          - AttributeName: PlayList
+            AttributeType: S
+        
+        KeySchema:
+          - AttributeName: Id
+            KeyType: HASH
+            
+          - AttributeName: Name
+            KeyType: RANGE
+        
+        GlobalSecondaryIndexes:
+        
+          - IndexName: NAME
+            KeySchema:
+          
+            - AttributeName: Name
+              KeyType: HASH
+            
+            - AttributeName: Id
+              KeyType: RANGE
+            
+            Projection:
+              ProjectionType: KEYS_ONLY
+            
+            ProvisionedThroughput:
+              ReadCapacityUnits: 1
+              WriteCapacityUnits: 1
+            
+          - IndexName: EMAIL
+            KeySchema:
+            
+            - AttributeName: Email
+              KeyType: HASH
+            
+            - AttributeName: Name
+              KeyType: RANGE
+            
+            Projection:
+              ProjectionType: KEYS_ONLY
+            
+            ProvisionedThroughput:
+              ReadCapacityUnits: 1
+              WriteCapacityUnits: 1
+              
+          - IndexName: PLAYLIST
+            KeySchema:
+          
+            - AttributeName: Id
+              KeyType: HASH
+            
+            - AttributeName: PlayList
+              KeyType: RANGE
+            
+            Projection:
+              ProjectionType: KEYS_ONLY
+            
+            ProvisionedThroughput:
+              ReadCapacityUnits: 1
+              WriteCapacityUnits: 1
+          
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:custom.tableName}
