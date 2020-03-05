@@ -20,7 +20,7 @@ service: users-api
 # frameworkVersion: "=X.X.X"
 
 custom:
-  tableName: 'users-table'
+  tableName: 'users'
 
 provider:
   name: aws
@@ -85,8 +85,6 @@ resources:
           - AttributeName: Email
             AttributeType: S
             
-          - AttributeName: PlayList
-            AttributeType: S
         
         KeySchema:
           - AttributeName: Id
@@ -129,21 +127,6 @@ resources:
               ReadCapacityUnits: 1
               WriteCapacityUnits: 1
               
-          - IndexName: PLAYLIST
-            KeySchema:
-          
-            - AttributeName: Id
-              KeyType: HASH
-            
-            - AttributeName: PlayList
-              KeyType: RANGE
-            
-            Projection:
-              ProjectionType: KEYS_ONLY
-            
-            ProvisionedThroughput:
-              ReadCapacityUnits: 1
-              WriteCapacityUnits: 1
           
         ProvisionedThroughput:
           ReadCapacityUnits: 1

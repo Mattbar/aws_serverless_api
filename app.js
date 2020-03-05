@@ -31,100 +31,59 @@ app.post("/save-user", function(req, res) {
     }
   }
 
-db.update(params,(err) =>{
-  if (err) {
-    console.log("UpdateDB ERROR: ", err);
-    res.status(400).json({ error: 'Could not create user' });
-  }
-    res.status(200);
-  });
+  db.update(params,(err) =>{
+    if (err) {
+      console.log("UpdateDB ERROR: ", err);
+      res.status(400).json({ error: 'Could not create user' });
+    }
+      res.status(200);
+    });
   
 });
 
 app.get("/user/playlist", function(req, res){
-  const response = {
-    statusCode: 200,
-    body: JSON.stringify({
-      message: "GET PLAYLIST"
-    }),
-  };
-  
-  res.send(response)
-})
-
-const addUser = user => {
-  
-  
-//   let updateStatus = 
-// return updateStatus;
-
-  // const userCount = new Promise((resolve, reject) => {
-  //   let count = checkForUser(id).then(data => {
-  //     return data;
-  //   });
-
-  //   console.log("COUNT: ", count);
-  //   resolve(count);
-  // });
-
-  // return userCount.then(count => {
-  //   if (count == 0) {
-  //     console.log("PUT IN DB");
-  //     return new Promise((resolve, reject) => {
-  //       db.updateItem(
-  //         {
-  //           TableName: USERS_TABLE,
-  //           Item: {
-  //             Id: {
-  //               N: id
-  //             },
-  //             Name: {
-  //               S: name
-  //             },
-  //             Email: {
-  //               S: email
-  //             }
-  //           }
-  //         },
-  //         function(err, data) {
-  //           if (err) {
-  //             console.log("putDB ERROR: ", err);
-  //             return err.statusCode;
-  //           }
-  //           //console.log("added to DB: ", data);
-  //           return 200;
-  //         }
-  //       );
-  //     });
-  //   } else {
-  //     console.log("ALREADY THERE");
-  //     return 200;
-  //   }
-  // });
-};
-function checkForUser(id) {
-  return new Promise((resolve, reject) => {
-    db.query(
-      {
-        TableName: USERS_TABLE,
-        KeyConditionExpression: "Id = :id",
-        ExpressionAttributeValues: {
-          ":id": {
-            N: id
-          }
-        }
-      },
-      function(err, data) {
-        if (err) {
-          console.log("checkDB ERR: ", err);
-        }
-        console.log("DATA", data.Count);
-        resolve(data.Count);
+  let user = req.body;
+   const params = {
+      TableName: USERS_TABLE,
+      Key: {
+        "Id": user.id,
+        "Name": user.name
       }
-    );
-  });
-}
+    }
+    
+    db.get(params, function(err, data){
+      if (err) {
+        console.error("Unable to read item. Error JSON:", JSON.stringify(err, null, 2));
+      } else {
+        res.status(200).json(data)
+        console.log("GetItem succeeded:", JSON.stringify(data, null, 2));
+      }
+    });
+});
 
+app.post("/user/playlist", function(req, res){
+  let user = req.body;
+  
+   const params = {
+      TableName: USERS_TABLE,
+      Key: {
+        "Id": user.id,
+        "Name": user.name
+      },
+      UpdateExpression: 'set PlayList = :p',
+      ExpressionAttributeValues: {
+        ':p' : user.songs
+      }
+  }
+  
+    db.update(params,(err) =>{
+    if (err) {
+      console.log("UpdateDB ERROR: ", err);
+      res.status(400).json({ error: 'Could not create user' });
+    }
+      res.status(200);
+    });
+});
 
 
 module.exports.handler = serverless(app)
