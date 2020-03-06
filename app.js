@@ -34,16 +34,17 @@ app.post("/save-user", function(req, res) {
   db.update(params,(err) =>{
     if (err) {
       console.log("UpdateDB ERROR: ", err);
-      res.status(400).json({ error: 'Could not create user' });
+      res.status(400).send({ error: 'Could not create user' });
     }
-      res.status(200);
+      res.status(200).send({message: "useradded"});
     });
   
 });
 
 app.get("/user/playlist", function(req, res){
   let user = req.body;
-   const params = {
+  if(isAuth(user.id, user.name)){
+    const params = {
       TableName: USERS_TABLE,
       Key: {
         "Id": user.id,
@@ -55,16 +56,20 @@ app.get("/user/playlist", function(req, res){
       if (err) {
         console.error("Unable to read item. Error JSON:", JSON.stringify(err, null, 2));
       } else {
-        res.status(200).json(data)
+        res.status(200).send(data)
         console.log("GetItem succeeded:", JSON.stringify(data, null, 2));
       }
     });
+  } else {
+     res.status(400).json({ error: 'Could not get playlist' });
+  }
+
 });
 
 app.post("/user/playlist", function(req, res){
   let user = req.body;
-  
-   const params = {
+  if(isAuth(user.id, user.name)){
+       const params = {
       TableName: USERS_TABLE,
       Key: {
         "Id": user.id,
@@ -74,16 +79,42 @@ app.post("/user/playlist", function(req, res){
       ExpressionAttributeValues: {
         ':p' : user.songs
       }
-  }
+    }
   
     db.update(params,(err) =>{
     if (err) {
       console.log("UpdateDB ERROR: ", err);
-      res.status(400).json({ error: 'Could not create user' });
+      res.status(400).json({ error: 'Could not create playlist' });
     }
-      res.status(200);
+      res.status(200).send({message: "Succsess"});
     });
+  } else {
+    res.status(400).json({ error: 'Could not create playlist' });
+  }
+
 });
+
+function isAuth(id, name){
+  const params = {
+      TableName: USERS_TABLE,
+      Key: {
+        "Id": id,
+        "Name": name
+      }
+    }
+    
+    db.get(params, function(err, data){
+      if (err) {
+        console.error("Unable to read item. Error JSON:", JSON.stringify(err, null, 2));
+      } else {
+        if(Object.keys(data).length === 0){
+          return false;
+        } else {
+          return true;
+        }
+      }
+    });
+}
 
 
 module.exports.handler = serverless(app)

@@ -175,7 +175,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/users-api/dev/1583386840596-2020-03-05T05:40:40.596Z/users-api.zip"
+          "S3Key": "serverless/users-api/dev/1583476495662-2020-03-06T06:34:55.662Z/users-api.zip"
         },
         "FunctionName": "users-api-dev-save",
         "Handler": "app.handler",
@@ -200,14 +200,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "SaveLambdaVersionajkfyKOLAMDAN482sdXi083pN9Xt4prYb8CzbkWHnaY": {
+    "SaveLambdaVersionqKlviXW4RcVs8l5canuijsIyKbhVviuYfSmUEPcIBY": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "SaveLambdaFunction"
         },
-        "CodeSha256": "xCmDMYM5AoLM4cul05zAeyVDQUgtC/fpa7e8DzqozSU="
+        "CodeSha256": "bAxz+XOfPbXYnyCP1Em5LDl57VDKb1l151tsjxGk090="
       }
     },
     "PlaylistPostLambdaFunction": {
@@ -217,7 +217,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/users-api/dev/1583386840596-2020-03-05T05:40:40.596Z/users-api.zip"
+          "S3Key": "serverless/users-api/dev/1583476495662-2020-03-06T06:34:55.662Z/users-api.zip"
         },
         "FunctionName": "users-api-dev-playlistPost",
         "Handler": "app.handler",
@@ -242,14 +242,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "PlaylistPostLambdaVersion7NmkJOZ3pD9ZJUCiOYNgJQ3vqDa4H8wDPyFA6ue1I": {
+    "PlaylistPostLambdaVersionKJAebnqMjhKxMlbhEPtB0QOoM6e31Xbyy1behcQif0": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "PlaylistPostLambdaFunction"
         },
-        "CodeSha256": "xCmDMYM5AoLM4cul05zAeyVDQUgtC/fpa7e8DzqozSU="
+        "CodeSha256": "bAxz+XOfPbXYnyCP1Em5LDl57VDKb1l151tsjxGk090="
       }
     },
     "PlaylistGetLambdaFunction": {
@@ -259,7 +259,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/users-api/dev/1583386840596-2020-03-05T05:40:40.596Z/users-api.zip"
+          "S3Key": "serverless/users-api/dev/1583476495662-2020-03-06T06:34:55.662Z/users-api.zip"
         },
         "FunctionName": "users-api-dev-playlistGet",
         "Handler": "app.handler",
@@ -284,14 +284,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "PlaylistGetLambdaVersion2w9EDBHKhyFcV5bHlUQHvtTkkBYXQP24OY3XAlTcBs": {
+    "PlaylistGetLambdaVersionlg9o8KG7fA3n3LDJniy1xKVY1mElHFWkiWJMH3f08Eo": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "PlaylistGetLambdaFunction"
         },
-        "CodeSha256": "xCmDMYM5AoLM4cul05zAeyVDQUgtC/fpa7e8DzqozSU="
+        "CodeSha256": "bAxz+XOfPbXYnyCP1Em5LDl57VDKb1l151tsjxGk090="
       }
     },
     "ApiGatewayRestApi": {
@@ -567,7 +567,7 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1583386836861": {
+    "ApiGatewayDeployment1583476491802": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -781,19 +781,19 @@
     "SaveLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "SaveLambdaVersionajkfyKOLAMDAN482sdXi083pN9Xt4prYb8CzbkWHnaY"
+        "Ref": "SaveLambdaVersionqKlviXW4RcVs8l5canuijsIyKbhVviuYfSmUEPcIBY"
       }
     },
     "PlaylistPostLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "PlaylistPostLambdaVersion7NmkJOZ3pD9ZJUCiOYNgJQ3vqDa4H8wDPyFA6ue1I"
+        "Ref": "PlaylistPostLambdaVersionKJAebnqMjhKxMlbhEPtB0QOoM6e31Xbyy1behcQif0"
       }
     },
     "PlaylistGetLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "PlaylistGetLambdaVersion2w9EDBHKhyFcV5bHlUQHvtTkkBYXQP24OY3XAlTcBs"
+        "Ref": "PlaylistGetLambdaVersionlg9o8KG7fA3n3LDJniy1xKVY1mElHFWkiWJMH3f08Eo"
       }
     },
     "ServiceEndpoint": {
